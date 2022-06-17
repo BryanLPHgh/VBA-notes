@@ -1,0 +1,59 @@
+Sub IndexandMatchFunc()
+
+	Dim mainWs As Worksheet, dataWs As Worksheet	Dim mainLastRow As Long, dataLastRow As Long, x As Long
+
+	Dim IndexRng As Range, MatchRng As Range
+
+	Dim ReturnObject As Range
+
+	
+
+	Set mainWs = ThisWorkbook.Worksheets("Main table")
+
+	Set dataWs = ThisWorkbook.Worksheets("Database")
+
+	
+
+	mainLastRow = mainWs.Range("A" & rows.Count).End(xlUp).Row
+
+	dataLastRow = dataWs.Range("A" & rows.Count).End(xlUp).Row
+
+	
+
+	Set IndexRng = dataWs.Range("title data column range")
+
+	Set MatchRng = dataWs.Range("row data column range")
+
+	
+
+	'Matching the Return object with Loop & error handling
+
+	For x = 2 To mainLastRow
+
+	
+
+	On Error Resume Next
+
+	
+
+				'Index(Array/reference, Row number, Column number) [use Match() to replace   ]
+
+				'Match(Lookup_value, Lookup_array, match_type[0/1])
+
+	
+
+				'Use " _" to split the long text
+
+				'Since already set the colunm range with IndexRng, no need for matching the column number
+
+	    mainWs.Range("D" & x).Value = Application.WorksheetFunction.Index( _
+
+	    IndexRng, _
+
+	    Application.WorksheetFunction.Match(mainWs.Range("A" & x).Value, MatchRng, 0))
+
+	
+
+	Next x
+
+End Sub
