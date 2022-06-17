@@ -1,0 +1,43 @@
+Sub Vlookupfuc()
+
+	'Define objects
+
+	Dim mainWs As Worksheet, dataWs As Worksheet
+
+	Dim mainLastRow As Long, dataLastRow As Long, x As Long
+
+	Dim datarng As Range
+
+	
+
+	Set mainWs = ThisWorkbook.Worksheets("Main table")
+
+	Set dataWs = ThisWorkbook.Worksheets("Database")
+
+	
+
+	mainLastRow = mainWs.Range("A" & rows.Count).End(xlUp).Row
+
+	dataLastRow = dataWs.Range("A" & rows.Count).End(xlUp).Row
+
+	
+
+	Set datarng = dataWs.Range("A2:B" & dataLastRow)
+
+	
+
+'Looping with Vlookup
+
+	For x = 2 To mainLastRow
+
+	    On Error Resume Next
+
+	    mainWs.Range("C" & x).Value = Application.WorksheetFunction.VLookup( _
+
+	    mainWs.Range("A" & x).Value, datarng, 2, False)
+
+	
+
+	Next x
+
+End Sub
