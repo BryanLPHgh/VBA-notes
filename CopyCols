@@ -1,0 +1,31 @@
+Sub CopyCols()
+
+    Application.ScreenUpdating = False
+
+    Dim LastRow As Long, header As Range, foundHeader As Range, lCol As Long, srcWS As Worksheet, desWS As Worksheet
+
+    Set srcWS = Sheets("Sheet2")
+
+    Set desWS = Sheets("Sheet1")
+
+    srcLastRow = srcWS.Cells.Find("*", SearchOrder:=xlByRows, SearchDirection:=xlPrevious).Row
+
+    desLastRow = desWS.Range("A" & Rows.Count).End(xlUp).Row
+
+    lCol = desWS.Cells(1, Columns.Count).End(xlToLeft).Column
+
+    For Each header In desWS.Range(desWS.Cells(1, 1), desWS.Cells(1, lCol))
+
+        Set foundHeader = srcWS.Rows(1).Find(header, LookIn:=xlValues, lookat:=xlWhole)
+
+        If Not foundHeader Is Nothing Then
+
+            srcWS.Range(srcWS.Cells(2, foundHeader.Column), srcWS.Cells(srcLastRow, foundHeader.Column)).Copy desWS.Cells(desLastRow + 1, header.Column)
+
+        End If
+
+    Next header
+
+    Application.ScreenUpdating = True
+
+End Sub
